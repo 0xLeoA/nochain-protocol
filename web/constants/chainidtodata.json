@@ -1,0 +1,18 @@
+{
+    "5": {
+        "NAME": "Goerli",
+        "RPC": "https://goerli.infura.io/v3/bf03983d4b674c3498909dbba597a803",
+        "LOGO": "https://imgs.search.brave.com/LiaWUTihYxX8OluXTYyU7LJD37rQQWC_ItM6laCvny4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTAvRXRo/ZXJldW0tTG9nby1U/cmFuc3BhcmVudC5w/bmc",
+        "USDC": "0x06D0c985E429a77b86D087d556b557EB1A120D60", 
+        "USDT": "0x706369889a68ca85B4F3f1FEADE07863F04515E3", 
+        "DAI": "0x669F361D7A18e6e6EbbEDf7C9506e901b6cAD72b"
+    }, 
+    "1442": {
+        "NAME": "Polygon ZkEVM",
+        "RPC": "https://rpc.public.zkevm-test.net",
+        "LOGO": "https://imgs.search.brave.com/s8P0iV_9uG4OygX94_kakvKEzi1bc9F1hUHb1lF_vXI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9haXJk/cm9wcy5pby93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMy8wNi9Q/b2x5Z29uLXprRVZN/LWxvZ28uanBn",
+        "USDC": "0x9637fb6C06f0f23674EE5E5724E473b42fC1fc5F", 
+        "USDT": "0xfA94cBDC28C5E6f856a894De88d0b78625f15fa5", 
+        "DAI": "0x923Ba574bEBa1163607cDf72Bc559C87BB81b2Eb"
+    }
+}

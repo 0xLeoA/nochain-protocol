@@ -1,0 +1,814 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+/* DropdownMenu.module.css */
+
+
+@-moz-keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@-webkit-keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(7px);
+  }
+
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-36px);
+  }
+
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+
+
+.topheader {
+  background-color: rgb(50, 50, 51);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-style: solid;
+  border-width: 0 0 0.35rem 0;
+  padding: 0.5rem 0rem 0rem 0rem;
+  margin-bottom: 1rem;
+  color: rgb(228, 228, 235);
+}
+
+.appborder {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  width: 95vw;
+  padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-radius: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
+}
+
+.centerdiv {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #e0e0e0, rgb(222, 222, 222));
+}
+
+.connectwallettobegin {
+  margin-bottom: 2.2rem;
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.9rem;
+  color: rgb(44, 44, 44);
+}
+
+.choosenetworktext {
+  margin-top: 1rem;
+  font-family: 'Kanit', sans-serif;
+  font-size: 1rem;
+  color: rgb(44, 44, 44);
+}
+
+.networktextdiv {
+  padding: 0 1rem 0 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paymentcompletiondiv {
+  width: 95vw;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.dropdownbutton {
+  cursor: pointer;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  font-family: 'Kanit', sans-serif;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-radius: 0.3rem;
+}
+
+.dropdownbuttonopen {
+  cursor: pointer;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Kanit', sans-serif;
+  border-style: solid;
+  border-width: 0.2rem 0.2rem 0.1rem 0.2rem;
+  border-radius: 0.3rem 0.3rem 0rem 0;
+  border-bottom: 0.15rem solid rgb(44,44,44);
+}
+
+.dropdownitemscontainer {
+  border-style: solid;
+  border-width: 0.025rem .2rem 0rem .2rem;
+  border-radius: 0 0 0.2rem 0.2rem;
+}
+
+.individualbalancetokendiv {
+  font-family: 'Kanit', sans-serif;
+  font-size: 1rem;
+  color: rgb(44, 44, 44);
+  margin-top: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  border-width: 0 0 0.2rem 0;
+}
+
+.balancetokenamount {
+  margin-left: 0.25rem;
+}
+
+.balancetokenname{
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.carets {
+  margin-left: 1rem;
+  height: 1rem;
+}
+
+.dropdowntokenimgs {
+  width: 1rem;
+}
+
+.networkname {
+  font-family: 'Kanit', sans-serif;
+    font-size: 1rem;
+    color: rgb(44, 44, 44);
+    margin-bottom: 1rem;
+}
+
+.totalBalanceTxt {
+  font-family: 'Kanit', sans-serif;
+  font-size: 1.1rem;
+  color: rgb(44, 44, 44);
+}
+
+.choosenetworklink {
+  cursor: pointer;
+  color: rgb(110, 110, 110);
+}
+
+.paymentsettinsdiv {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-family: 'Kanit', sans-serif;
+  font-size: 1rem;
+}
+.toppaymentsettingsdiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.paymentcompletionbuttondiv {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paymentcompletionbutton {
+  font-family: 'Kanit', sans-serif;
+  background-color: rgb(44,44,44);
+  border-style: none;
+  color: #e0e0e0;
+  padding: 0.5rem 0.55rem 0.5rem 0.55rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition-duration: 0.15s;
+}
+
+.paymentcompletionbutton:hover {
+  opacity: 0.85;
+}
+
+.flexcolumncentered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flexrowjustifycenter {
+  display: flex; 
+  flex-direction: row; 
+  justify-content: center;
+}
+
+.bottompaymentsettingsdiv {
+  margin-top: 0rem;
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+}
+
+.paymentinputerror {
+  color: red;
+  font-size: 0.7rem;
+  letter-spacing: 0.05rem;
+}
+
+.paymentinputerrorsdiv {
+  display: flex; 
+  flex-direction: column;
+  margin-top: 0.25rem;
+}
+.selectedtokenname {
+  margin: 0.2rem 0.3rem 0 0.4rem;
+  border-style: solid;
+  border-radius: 0.5rem;
+  border-width: 0.11rem;
+  padding: 0 0.2rem 0 0.2rem;
+  font-family: 'Kanit', sans-serif;
+  cursor: pointer;
+  transition-duration: 0.15s;
+  display: flex; 
+  flex-direction: row;
+}
+
+.selectedtokenname:hover {
+  opacity: 0.8;
+}
+
+.selectedtokenname:active {
+  opacity: 0.7;
+}
+
+.selectedtokenimg {
+  width: 0.8rem;
+  margin-right: 0.3rem;
+}
+
+.selectedtokenimgdiv {
+  padding-top: 0.1rem;
+}
+
+.selectednetworkbutton {
+  margin: 0.2rem 0rem 0 0.5rem;
+  border-style: solid;
+  border-radius: 0.5rem;
+  border-width: 0.11rem;
+  padding: 0 0.3rem 0 0.3rem;
+  font-family: 'Kanit', sans-serif;
+  cursor: pointer;
+  transition-duration: 0.15s;
+  display: flex;
+  flex-direction: row;
+  transition-duration: 0.15s;
+}
+
+.selectednetworkbutton:hover {
+  opacity: 0.8;
+}
+
+.selectednetworkimg {
+  width: 0.8rem;
+  margin-right: 0.3rem;
+}
+
+
+.balancediv {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+@media (min-width: 1120px) { 
+  .appborder {
+    width: 70rem;
+  }
+  
+}
+
+@media (max-width: 750px) {
+
+.nochainheader {
+  font-family: 'Kanit', sans-serif;
+  font-size: 3rem;
+  color: rgb(44, 44, 44);
+  margin-bottom: 1rem;
+}
+
+.nochainheaderspacing {
+  font-size: 1.3rem;
+  visibility: hidden;
+}
+
+.networkabstractiontext {
+  margin-bottom: 3rem;
+  font-family: 'Kanit', sans-serif;
+  font-size: 1rem;
+  color: rgb(44, 44, 44);
+}
+
+.networkabstractionspan {
+  letter-spacing: 0.1rem;
+  margin: 0 0.2rem 0 0.2rem;
+}
+
+.connectwallettobegin {
+  margin-bottom: 0.5rem;
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.9rem;
+  color: rgb(44, 44, 44);
+}
+
+.downArrowbounce {
+  -moz-animation: bounce 3s infinite;
+  -webkit-animation: bounce 3s infinite;
+  animation: bounce 3s infinite;
+  margin-bottom: 0.25rem;
+}
+
+.connectbutton {
+  font-family: 'Kanit', sans-serif;
+  background-color: rgb(44, 44, 44);
+  color: white;
+  padding: 0.75rem 2rem 0.75rem 2rem;
+  border-style: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition-duration: 0.15s;
+  font-size: 0.8rem;
+}
+
+.connectbutton:hover {
+  opacity: 0.9;
+}
+
+.paymentcompletiondiv {
+  width: 95vw;
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.bottomspacing {
+  margin-bottom: 14rem;
+}
+
+@-moz-keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@-webkit-keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(14px);
+  }
+
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-18px);
+  }
+
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-12px);
+  }
+}
+}
+
+@media (min-width: 750px) {
+  @media (max-width: 950px) {
+
+
+    .nochainheader {
+        font-family: 'Kanit', sans-serif;
+        font-size: 5.8rem;
+        color: rgb(44, 44, 44);
+        margin-bottom: 1rem;
+      }
+    
+      .nochainheaderspacing {
+        font-size: 3rem;
+        visibility: hidden;
+      }
+    
+      .networkabstractiontext {
+        margin-bottom: 4rem;
+        font-family: 'Kanit', sans-serif;
+        font-size: 1.3rem;
+        color: rgb(44, 44, 44);
+      }
+    
+      .networkabstractionspan {
+        letter-spacing: 0.1rem;
+        margin: 0 0.2rem 0 0.2rem;
+      }
+    
+      .connectwallettobegin {
+        margin-bottom: 2.2rem;
+        font-family: 'Kanit', sans-serif;
+        font-size: 1.1rem;
+        color: rgb(44, 44, 44);
+      }
+    
+      .downArrowbounce {
+        -moz-animation: bounce 3s infinite;
+        -webkit-animation: bounce 3s infinite;
+        animation: bounce 3s infinite;
+        margin-bottom: 0.25rem;
+      }
+    
+      .connectbutton {
+        font-family: 'Kanit', sans-serif;
+        background-color: rgb(44, 44, 44);
+        color: white;
+        padding: 0.75rem 2rem 0.75rem 2rem;
+        border-style: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition-duration: 0.15s;
+        font-size: 1rem;
+      }
+    
+      .connectbutton:hover {
+        opacity: 0.9;
+      }
+    
+      .bottomspacing {
+        margin-bottom: 17rem;
+      }
+  }
+  
+}
+
+
+@media (min-width: 950px) {
+
+  
+  .nochainheader {
+    font-family: 'Kanit', sans-serif;
+    font-size: 7.6rem;
+    color: rgb(44, 44, 44);
+    margin-bottom: 2rem;
+  }
+
+  .nochainheaderspacing {
+    font-size: 3rem;
+    visibility: hidden;
+  }
+
+  .networkabstractiontext {
+    margin-bottom: 4rem;
+    font-family: 'Kanit', sans-serif;
+    font-size: 1.2rem;
+    color: rgb(44, 44, 44);
+  }
+
+  .networkabstractionspan {
+    letter-spacing: 0.1rem;
+    margin: 0 0.2rem 0 0.2rem;
+  }
+
+  .connectwallettobegin {
+    margin-bottom: 2.2rem;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.9rem;
+    color: rgb(44, 44, 44);
+  }
+
+  .downArrowbounce {
+    -moz-animation: bounce 3s infinite;
+    -webkit-animation: bounce 3s infinite;
+    animation: bounce 3s infinite;
+    margin-bottom: 0.25rem;
+  }
+
+  .connectbutton {
+    font-family: 'Kanit', sans-serif;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    padding: 0.75rem 2rem 0.75rem 2rem;
+    border-style: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition-duration: 0.15s;
+    font-size: 1rem;
+  }
+
+  .connectbutton:hover {
+    opacity: 0.9;
+  }
+
+  .bottomspacing {
+    margin-bottom: 17rem;
+  }
+
+}
+
+
+
+
+.bounce {
+  -moz-animation: bounce 3s infinite;
+  -webkit-animation: bounce 3s infinite;
+  animation: bounce 3s infinite;
+}
+
+
+
+
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.btn-modal {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+}
+
+.modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+.modalcontent {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+  display: flex; 
+  flex-direction: column;
+  background: radial-gradient(circle, #e0e0e0, rgb(222, 222, 222));
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
+}
+
+.modaltokenselectionbutton {
+  cursor: pointer;
+  border-style: solid;
+  border-width: 0.1rem;
+  margin: 0.5rem 0 0.5rem 0;
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.85rem;
+  color: rgb(44,44,44);
+  padding: 0.2rem 0.3rem 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+  transition-duration: 0.15s;
+  display: flex; 
+  flex-direction: row;
+}
+
+.modaltokenselectionbutton:hover {
+  opacity: 0.9;
+}
+
+.modaltokenselectionimgdiv {
+  padding-top: 0.1rem;
+  margin-right: 0.1rem;
+}
+
+.areyousuretxt {
+  font-size: 1rem;
+  border-style: solid;
+  padding: 0 0rem 0.01rem 0;
+  border-width: 0 0 0.15rem 0;
+}
+
+.thiswillcostyoudiv {
+  margin-top: 1.5rem;
+  display: flex; 
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.thiswillcostyoutxt {
+  margin-right: 0.3rem;
+}
+
+.paymentmodalcontent {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle, #e0e0e0, rgb(222, 222, 222));
+}
+
+.tokencostdiv {
+  display: flex;
+  flex-direction: row;
+  margin-right: 0.3rem;
+}
+
+.paymentmodaltokenselectionimgdiv {
+  padding-top: 0.1rem;
+  margin-right: 0.1rem;
+  margin-left: 0.2rem;
+}
+
+.paymentconfirmationtokenimg {
+  width: 0.9rem;
+  margin-right: 0.1rem;
+}
+
+.paymentcompletionand {
+  margin-right: 0.3rem;
+}
+
+.yesproceedbutton {
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.8rem;
+  background-color: rgb(44, 44, 44);
+  color: #e0e0e0;
+  margin-top: 2rem;
+  padding: 0.3rem 0.4rem 0.3rem 0.4rem;
+  border-color: rgb(44,44,44);
+  border-style: solid;
+  border-width: 0.2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition-duration: 0.15s;
+}
+
+.yesproceedbutton:hover {
+  opacity: 0.9;
+}
+
+.flexrowspacebetween {
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.closebutton {
+  border-style: none;
+  border-radius: 0rem;
+  background-color: #e0e0e0;
+  cursor:pointer;
+}
