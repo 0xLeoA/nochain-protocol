@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import styles from '@/styles/Home.module.css'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -73,36 +75,46 @@ export default function CompletePaymentButton(props) {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const [buttonText, setButtonText] = useState("Yes, proceed")
-    const [txsSigned, setTxsSigned] = useState(0)
-    const getTransactionData = async (length, nonce, abi, domainData, params) => {
+    const [modalOpen, setModalOpen] = useState(false)
+    const [amountSigned, setAmountSigned] = useState(0)
+    useEffect(() => {
+        setAmountSigned(0)
+    }, [modalOpen])
 
-  const functionSignature = funcSignature(abi, params);
+    const getTransactionData = async (nonce, abi, domainData, params) => {
 
-  let message = {};
-  message.nonce = parseInt(nonce);
-  message.from = await signer.getAddress();
-  message.functionSignature = functionSignature;
+        const functionSignature = funcSignature(abi, params);
 
-  const dataToSign = {
-    types: {
-      EIP712Domain: domainType,
-      MetaTransaction: metaTransactionType,
-    },
-    domain: domainData,
-    primaryType: "MetaTransaction",
-    message: message,
+        let message = {};
+        message.nonce = parseInt(nonce);
+        message.from = await signer.getAddress();
+        message.functionSignature = functionSignature;
+
+        const dataToSign = {
+            types: {
+                EIP712Domain: domainType,
+                MetaTransaction: metaTransactionType,
+            },
+            domain: domainData,
+            primaryType: "MetaTransaction",
+            message: message,
         };
         
         console.log("-------")
         console.log(domainData)
         console.log(metaTransactionType)
         console.log(message)
-
-        let signature = await signer._signTypedData(domainData, metaTransactionType, message);
-        setTxsSigned(txsSigned + 1)
-        setButtonText(`Meta Txs Signed: ${txsSigned}/${length}`)
-
+        let signature
+        try {
+            signature = await signer._signTypedData(domainData, metaTransactionType, message);
+        } catch (e) {
+            setModalOpen(false)
+            return
+        
+        }
+    
+        setAmountSigned(amountSigned + 1)
+        console.log(amountSigned)
   let r = signature.slice(0, 66);
   let s = "0x".concat(signature.slice(66, 130));
   let v = "0x".concat(signature.slice(130, 132));
@@ -156,7 +168,6 @@ export default function CompletePaymentButton(props) {
     
     
     const [showErrors, setShowErrors] = useState(!(isWholeNumber(props.amount) && isValidReceiver(props.receiver) && sufficientBalance()))
-    const [modalOpen, setModalOpen] = useState(false)
     let prevPropsAmount = props.amount;
     let prevPropsReceiver = props.receiver;
     useEffect(() => { 
@@ -243,9 +254,24 @@ export default function CompletePaymentButton(props) {
     const privateProvider = new ethers.providers.JsonRpcProvider(CHAINIDTODATA[String(props.network)]["RPC"])
     const wallet = new ethers.Wallet(key, privateProvider); 
 
+    const [proceedButtonText, setProceedButtonText] = useState('Yes, proceed')
+    const [signing, setSigning] = useState(false)
+    const [metaTxDatas, setMetaTxDatas] = useState()
+
+    useEffect(() => {
+        setProceedButtonText('Yes, proceed')
+        setSigning(false)
+        setMetaTxDatas([])
+    }, [modalOpen])
+    useEffect(() => {
+        setSigning(false)
+        if (amountSigned > 0) {
+            setProceedButtonText(`Click to Sign | ${amountSigned}/${paymentPath.length} Meta Txs Signed`)
+        }
+    }, [amountSigned])
     async function executeMetaTxs() {
-        paymentPath.forEach(item => {
-            async function run() {
+        setSigning(true)
+                setProceedButtonText(`Click to Sign | ${amountSigned}/${paymentPath.length} Meta Txs Signed`)
                 /**let token = new ethers.Contract(CHAINIDTODATA[props.network][item.token], MetaTxERC20ABI, wallet)
                     let name = paymentPath.token;
                     let nonce = await token.getNonce(signer.getAddress());
@@ -263,8 +289,8 @@ export default function CompletePaymentButton(props) {
                         domainData,
                         ['0x22B5E002B8B20727d12331e88778828fb4B14683', BigInt(69*10**18)]
                     );**/
-                setButtonText(`Signed Meta Txs: 0/${paymentPath.length}`)
-                let token = new ethers.Contract(CHAINIDTODATA[props.network][item.token], MetaTxERC20ABI, wallet)
+                
+                let token = new ethers.Contract(CHAINIDTODATA[props.network][paymentPath[amountSigned].token], MetaTxERC20ABI, wallet)
                     let name = await token.name();
                     let nonce = await token.getNonce(await signer.getAddress());
                     console.log(await signer.getAddress())
@@ -275,23 +301,26 @@ export default function CompletePaymentButton(props) {
                     version: version,
                         verifyingContract: token.address,
                     salt: '0x' + chainId.toHexString().substring(2).padStart(64, '0'),
-                };
-                try {
-                    let { r, s, v, functionSignature } = await getTransactionData(
-                        paymentPath.length,
-                        nonce,
-                        transferAbi,
-                        domainData,
-                        ['0x22B5E002B8B20727d12331e88778828fb4B14683', BigInt(69 * 10 ** 18)]
-                    )
-                } catch (e) {
-                    console.log(e) 
-                    setModalOpen(false)
-                    setButtonText("Yes, Proceed")
-                }
-            }
-            run()
-        })
+        };
+        
+        
+        try {
+            let { r, s, v, functionSignature } = await getTransactionData(
+                nonce,
+                transferAbi,
+                domainData,
+                [CHAINIDTODATA[props.network]["EXECUTOR"], paymentPath[amountSigned].amount*10**18]
+            )
+            let _data = metaTxDatas
+            _data.push({ r, s, v, functionSignature })
+            setMetaTxDatas(_data)
+            console.log(metaTxDatas)
+        } catch (e) {
+            console.log(e)
+            return
+        }
+    
+        
                     
                     /**let token = props.usdc_contract
                     let name = await token.name();
@@ -344,10 +373,7 @@ export default function CompletePaymentButton(props) {
                            <h key={i}>{paymentPath[i].token}{i !== paymentPath.length - 1 && paymentPath.length == 3 ? <h>,</h> : <h></h>} </h></div>
 ))}
                 </div>
-                <div><button className={styles.yesproceedbutton} onClick={async () => {
-                executeMetaTxs()
-    console.log("Created Tx Construction Data")
-                }}>{buttonText}</button></div>
+                <div><button disabled={signing} className={styles.yesproceedbutton} onClick={executeMetaTxs}>{proceedButtonText}</button></div>
             </div>
         </div>: <></>}
         </div>)
