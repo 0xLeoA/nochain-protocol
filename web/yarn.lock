@@ -10113,6 +10113,13 @@ web3-errors@^1.1.1:
   dependencies:
     web3-types "^1.1.1"
 
+web3-errors@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/web3-errors/-/web3-errors-1.1.2.tgz#aa60ed7ca3e0e00039f0e2556c8c5b840a0f1399"
+  integrity sha512-qlyuV5r6MzjLasIalVWBIIfW4Y7hBX2bZv8TRnXvI1EjiZ36zIFKgE9RF+/iRBjXmOsvIUQQ2Z9gMvYGfOwUwQ==
+  dependencies:
+    web3-types "^1.2.0"
+
 web3-eth-abi@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/web3-eth-abi/-/web3-eth-abi-4.1.1.tgz#08a2583cc3ea8fb77dfa33e5468dec24a9852fec"
@@ -10123,6 +10130,17 @@ web3-eth-abi@^4.1.1:
     web3-errors "^1.1.1"
     web3-types "^1.1.1"
     web3-utils "^4.0.5"
+
+web3-eth-abi@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/web3-eth-abi/-/web3-eth-abi-4.1.2.tgz#a7b262ce0ad12aa4af1edc6f89053fb1d39010d4"
+  integrity sha512-s8gvjUwzb2ZnAef0Jy68pjmeshYIKBoYlVj/1yuuFP9t3io3oQQIEyGlaCx7P4ifsZ186gMa4QjCCeIt7HYm7Q==
+  dependencies:
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/bignumber" "^5.7.0"
+    web3-errors "^1.1.2"
+    web3-types "^1.2.0"
+    web3-utils "^4.0.6"
 
 web3-eth-accounts@^4.0.5:
   version "4.0.5"
@@ -10320,6 +10338,11 @@ web3-types@^1.1.1:
   resolved "https://registry.yarnpkg.com/web3-types/-/web3-types-1.1.1.tgz#d3df5e9839bf70a19b070313fd3d9ee07fbffbf3"
   integrity sha512-bXmIPJi/NPed43JBcya71gT+euZSMvfQx6NYv8G97PSNxR1HWwANYBKbamTZvzBbq10QCwQLh0hZw3tyOXuPFA==
 
+web3-types@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/web3-types/-/web3-types-1.2.0.tgz#176bfe53d7e46c2488d6b95c98df8f6cb1fe1375"
+  integrity sha512-ljx8mrkrOI8fRqvgOdxfpKYoso6n7I8T9LsqXl+Mz2Db0L+2H15an0xgdoWYpKndTPiU2NKRWFiopYifBQzcxQ==
+
 web3-utils@1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/web3-utils/-/web3-utils-1.5.2.tgz#150982dcb1918ffc54eba87528e28f009ebc03aa"
@@ -10343,6 +10366,16 @@ web3-utils@^4.0.5:
     web3-types "^1.1.1"
     web3-validator "^2.0.1"
 
+web3-utils@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/web3-utils/-/web3-utils-4.0.6.tgz#37c30cb884e1ccfecb752269bc7ff285105f4c0a"
+  integrity sha512-nLVtMf9mWTX604XiQQkWZlHLCag9GdHfQtnGJDNaDssTLUx5SpOm1CjhKCHcVcAH/QazEsWcLqUAuyqwKST1kA==
+  dependencies:
+    ethereum-cryptography "^2.0.0"
+    web3-errors "^1.1.2"
+    web3-types "^1.2.0"
+    web3-validator "^2.0.2"
+
 web3-validator@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/web3-validator/-/web3-validator-2.0.1.tgz#8da5b9f871c0aac7677f4a5eca46b4fee9b6d0ff"
@@ -10352,6 +10385,17 @@ web3-validator@^2.0.1:
     util "^0.12.5"
     web3-errors "^1.1.1"
     web3-types "^1.1.1"
+    zod "^3.21.4"
+
+web3-validator@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/web3-validator/-/web3-validator-2.0.2.tgz#c0d411371c5ab75806c8ad958276171678b8ddb9"
+  integrity sha512-9sQ5owd2UldTsva3o3htj2fTPpbmUwb4TfBXhjIkew8FyT0ss3DPI+j3p6XrfdxIVBEQ5r17YUakElDV99aW+A==
+  dependencies:
+    ethereum-cryptography "^2.0.0"
+    util "^0.12.5"
+    web3-errors "^1.1.2"
+    web3-types "^1.2.0"
     zod "^3.21.4"
 
 web3@^4.1.1:

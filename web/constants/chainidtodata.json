@@ -11,7 +11,7 @@
         "NAME": "Polygon ZkEVM",
         "RPC": "https://rpc.public.zkevm-test.net",
         "LOGO": "https://imgs.search.brave.com/s8P0iV_9uG4OygX94_kakvKEzi1bc9F1hUHb1lF_vXI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9haXJk/cm9wcy5pby93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMy8wNi9Q/b2x5Z29uLXprRVZN/LWxvZ28uanBn",
-        "USDC": "0x9637fb6C06f0f23674EE5E5724E473b42fC1fc5F", 
+        "USDC": "0x4e64EE8b3B0F37d82B494d7e96De9fe7fee3a202", 
         "USDT": "0xfA94cBDC28C5E6f856a894De88d0b78625f15fa5", 
         "DAI": "0x923Ba574bEBa1163607cDf72Bc559C87BB81b2Eb"
     }

@@ -11,7 +11,7 @@ import CompletePayment from './CompletePayment';
 
 export default function Connected() {
     const { address, isConnecting, isDisconnected, isConnected } = useAccount()
-    const key = "46f544a94d8f67dbe5070b6ca15b2c5a5fcff008cff23eb2402b79eca409ad57"
+    const key = "bec85bb9afa5dec2749e4d9e5eb5184a3434dddd336cee7f9bb6b17fbbceaaa9"
     
     // polygon zkevm default network
     const [network, setNetwork] = useState(1442)
@@ -49,7 +49,7 @@ export default function Connected() {
                 <h className={styles.networkname}>Selected Network: {CHAINIDTODATA[String(network)]['NAME']}</h>
                 <Balances usdc={balances.USDC} usdt={balances.USDT} dai={balances.DAI} total = {balances.TOTAL} />
                     
-                <CompletePayment usdc={balances.USDC} usdt={balances.USDT} dai={balances.DAI} network={network} total_bal={balances["TOTAL"]} />
+                <CompletePayment network={network} usdc={balances.USDC} usdt={balances.USDT} dai={balances.DAI} network={network} total_bal={balances["TOTAL"]} />
                 
             </div>
         </div>
