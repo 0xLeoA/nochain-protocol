@@ -7,11 +7,13 @@ import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } fro
 import { readContract, watchContractEvent, getAccount, prepareWriteContract, writeContract, waitForTransaction, useContractWrite } from '@wagmi/core';
 import { ethers } from 'ethers';
 import Balances from './Balances';
-import { CHAINIDTODATA, MetaTxERC20ABI } from '@/constants';
+import { CHAINIDTODATA, MetaTxERC20ABI, EXECUTOR } from '@/constants';
 import { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { utils } from "web3-utils";
 import { funcSignature } from '@/scripts';
+
+
 
 export default function CompletePaymentButton(props) {
  
@@ -309,12 +311,43 @@ export default function CompletePaymentButton(props) {
                 nonce,
                 transferAbi,
                 domainData,
-                [CHAINIDTODATA[props.network]["EXECUTOR"], paymentPath[amountSigned].amount*10**18]
+                [CHAINIDTODATA[props.network]["EXECUTOR"], BigInt(paymentPath[amountSigned].amount*10**18)]
             )
+            console.log(paymentPath[amountSigned].amount*10**18)
             let _data = metaTxDatas
             _data.push({ r, s, v, functionSignature })
             setMetaTxDatas(_data)
-            console.log(metaTxDatas)
+            if (amountSigned + 1== paymentPath.length) {
+                // if all txs have been signed, proceed
+                let executor = new ethers.Contract(CHAINIDTODATA[props.network]["EXECUTOR"], EXECUTOR, wallet)
+                let CAs = []
+                let UAs = []
+                let FSs = []
+                let SRs = []
+                let SSs = []
+                let SVs = []
+                let TAs  = []
+                let DT = CHAINIDTODATA[props.network][props.selectedToken]
+                let PA = BigInt(props.amount*10**18)
+                let R = props.receiver
+                let DCI = 1
+                let CCDTA = props.receiver
+                console.log(`Payment Path Length: ${paymentPath.length}`)
+                for (let i =0; i < paymentPath.length; i++) {
+                    console.log("----------")
+                    CAs.push(CHAINIDTODATA[props.network][paymentPath[i].token])
+                    UAs.push(await signer.getAddress())
+                    FSs.push(metaTxDatas[i].functionSignature)
+                    SRs.push(metaTxDatas[i].r)
+                    SSs.push(metaTxDatas[i].s)
+                    SVs.push(metaTxDatas[i].v)
+                    TAs.push(BigInt(paymentPath[i].amount * 10 ** 18))
+                }
+                console.log("Executing")
+                console.log([CAs, UAs, FSs, SRs, SSs, SVs, TAs, DT, PA, R, DCI, CCDTA])
+                const tx = await executor.executePayment(CAs, UAs, FSs, SRs, SSs, SVs, TAs, DT, PA, R, DCI, CCDTA)
+                console.log(tx.hash)
+            }
         } catch (e) {
             console.log(e)
             return

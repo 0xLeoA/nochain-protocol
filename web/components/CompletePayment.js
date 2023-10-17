@@ -63,7 +63,8 @@ export default function CompletePayment(props) {
   padding: '5px',
   outline: 'none',
   fontFamily: "'Kanit', sans-serif",
-  fontSize: '0.8rem',
+        fontSize: '0.8rem',
+  maxWidth: "3rem"
     };
     
     const receivertInputStyle = {
@@ -75,7 +76,8 @@ export default function CompletePayment(props) {
   padding: '5px',
   outline: 'none',
   fontFamily: "'Kanit', sans-serif",
-  fontSize: '0.8rem',
+        fontSize: '0.8rem',
+  maxWidth: "7rem"
   };
     return (<div className={styles.paymentsettinsdiv}>
         <div className={styles.toppaymentsettingsdiv}>
