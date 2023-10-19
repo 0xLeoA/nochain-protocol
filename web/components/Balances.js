@@ -6,6 +6,7 @@ import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } fro
 import { readContract, watchContractEvent, getAccount, prepareWriteContract, writeContract, waitForTransaction, useContractWrite } from '@wagmi/core';
 import { ethers } from 'ethers';
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
+import LoadingIcons from 'react-loading-icons'
 
 export default function Balances(props) {
 
@@ -41,13 +42,13 @@ export default function Balances(props) {
         <div className={styles.balancediv}>
         <button className={isOpen == false ? styles.dropdownbutton : styles.dropdownbuttonopen}
             onClick={() => setIsOpen((prev) => !prev)}>
-            Fetched Wallet Value: {props.total} $USD
-            {!isOpen ? <FaCaretDown className={styles.carets} /> : <FaCaretUp className={styles.carets} />}
+                Fetched Wallet Value: {props.loadingBals ? <LoadingIcons.Bars className={styles.totalbalbars} fill="rgb(44,44,44)" width="15" height="15" speed={1.5} /> : <> {props.total }</>} $USD
+            {!isOpen ? <FaCaretDown className={styles.carets} /> : <FaCaretUp className={styles.carets} />} 
         </button>
         {isOpen && <div className={styles.dropdownitemscontainer}>
             {list.map((item, i) => (
                 <div className={styles.individualbalancetokendiv}>
-                    <h className={styles.balancetokenamount}> {item.amount}</h>
+                    <h className={styles.balancetokenamount}>{item.amount}</h>
                     <div><img className={styles.dropdowntokenimgs} src={item.img} />
                     <h className={styles.balancetokenname}> {item.name} </h></div>
                     

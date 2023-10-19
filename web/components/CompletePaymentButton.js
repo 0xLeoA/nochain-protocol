@@ -12,10 +12,12 @@ import { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { utils } from "web3-utils";
 import { funcSignature } from '@/scripts';
+import { Rings, SpinningCircles, TailSpin , Circles, Puff } from 'react-loading-icons';
 
 
 
 export default function CompletePaymentButton(props) {
+    
  
     const transferAbi = {
         inputs: [
@@ -205,6 +207,13 @@ export default function CompletePaymentButton(props) {
         // props.amount
         if (props[props.selectedToken] >= props.amount) {
             tpp.push({ "token": props.selectedToken, "amount": Number(props.amount) })
+        } else if (props["USDC"] >= props.amount) {
+            tpp.push({ "token":  "USDC", "amount": Number(props.amount) })
+        } else if (props["USDT"] >= props.amount) {
+            tpp.push({ "token":  "USDT", "amount": Number(props.amount) })
+        }
+        else if (props["DAI"] >= props.amount) {
+            tpp.push({ "token":  "DAI", "amount": Number(props.amount) })
         } else {
             let usdc_usdt = props.USDC + props.USDT
             let dai_usdc = props.DAI + props.USDC
@@ -259,21 +268,31 @@ export default function CompletePaymentButton(props) {
     const [proceedButtonText, setProceedButtonText] = useState('Yes, proceed')
     const [signing, setSigning] = useState(false)
     const [metaTxDatas, setMetaTxDatas] = useState()
+    const [txHash, setTxHash] = useState()
+    const [awaitingConfirmation, setAwaitingConfirmation] = useState(false)
+    useEffect(() => {
+        if (!modalOpen) {
+            setProceedButtonText('Yes, proceed')
+            setSigning(false)
+            setMetaTxDatas([])
+            setTxHash("")
+        }
+    }, [modalOpen])
 
     useEffect(() => {
-        setProceedButtonText('Yes, proceed')
-        setSigning(false)
-        setMetaTxDatas([])
-    }, [modalOpen])
+        if (signing) {
+            setProceedButtonText("Sign Transaction" )
+        }
+        
+    }, [signing])
     useEffect(() => {
         setSigning(false)
-        if (amountSigned > 0) {
+        if (amountSigned > 0 & proceedButtonText !== "Executing") {
             setProceedButtonText(`Click to Sign | ${amountSigned}/${paymentPath.length} Meta Txs Signed`)
         }
     }, [amountSigned])
     async function executeMetaTxs() {
         setSigning(true)
-                setProceedButtonText(`Click to Sign | ${amountSigned}/${paymentPath.length} Meta Txs Signed`)
                 /**let token = new ethers.Contract(CHAINIDTODATA[props.network][item.token], MetaTxERC20ABI, wallet)
                     let name = paymentPath.token;
                     let nonce = await token.getNonce(signer.getAddress());
@@ -319,6 +338,9 @@ export default function CompletePaymentButton(props) {
             setMetaTxDatas(_data)
             if (amountSigned + 1== paymentPath.length) {
                 // if all txs have been signed, proceed
+
+                setAwaitingConfirmation(true)
+                setProceedButtonText("Executing")
                 let executor = new ethers.Contract(CHAINIDTODATA[props.network]["EXECUTOR"], EXECUTOR, wallet)
                 let CAs = []
                 let UAs = []
@@ -346,7 +368,13 @@ export default function CompletePaymentButton(props) {
                 console.log("Executing")
                 console.log([CAs, UAs, FSs, SRs, SSs, SVs, TAs, DT, PA, R, DCI, CCDTA])
                 const tx = await executor.executePayment(CAs, UAs, FSs, SRs, SSs, SVs, TAs, DT, PA, R, DCI, CCDTA)
+               
                 console.log(tx.hash)
+                setTxHash(tx.hash)
+                await tx.wait() 
+                setAwaitingConfirmation(false)
+                setProceedButtonText("Payment Complete!")
+                props.defineBalances()
             }
         } catch (e) {
             console.log(e)
@@ -395,7 +423,8 @@ export default function CompletePaymentButton(props) {
         {modalOpen ? <div className={styles.modal}>
             <div onClick={() => {setModalOpen(false)}} className={styles.overlay} />
             <div className={styles.paymentmodalcontent}>
-                <div className={styles.flexrowspacebetween}><h className={styles.areyousuretxt}>Are you sure?</h><div><button className={styles.closebutton}  onClick={() => setModalOpen(false)}><FaTimes/></button></div></div>
+                {proceedButtonText!== "Payment Complete!" ?
+                <><div className={styles.flexrowspacebetween}><h className={styles.areyousuretxt}>Are you sure?</h><div><button className={styles.closebutton}  onClick={() => setModalOpen(false)}><FaTimes/></button></div></div>
                 <div className={styles.thiswillcostyoudiv}>
                     <h className={styles.thiswillcostyoutxt} >This will cost you</h>
                    {createArrayFromValue(3, paymentPath.length).map((item, i) => (
@@ -406,7 +435,12 @@ export default function CompletePaymentButton(props) {
                            <h key={i}>{paymentPath[i].token}{i !== paymentPath.length - 1 && paymentPath.length == 3 ? <h>,</h> : <h></h>} </h></div>
 ))}
                 </div>
-                <div><button disabled={signing} className={styles.yesproceedbutton} onClick={executeMetaTxs}>{proceedButtonText}</button></div>
+                <div><button disabled={signing || proceedButtonText=="Payment Complete!" || proceedButtonText=="Executing"} className={styles.yesproceedbutton} onClick={executeMetaTxs}>{proceedButtonText} {signing ? <div className={styles.pushdiv}><Circles className={styles.customloadingicon} /></div> : <></>} {awaitingConfirmation ? <div><TailSpin className={styles.customloadingicon} /></div> : <></>}</button></div>
+                    </> : <><div className={styles.flexrowspacebetween}><h className={styles.paymentcompletetxt}>Payment Complete</h><div><button className={styles.closebutton}  onClick={() => setModalOpen(false)}><FaTimes/></button></div></div>
+                        <div className={styles.paymentcompletiondatadiv}>
+                            <div className={styles.flexrow}>
+                                <h className={styles.paymentcompletiondatatxt}>Sent {props.amount} </h><div className={styles.paymentcompletiontokenimgdiv}><img src={props.tokenToImg[props.selectedToken]} className={styles.paymentcompletiontokenimg} /></div>{props.selectedToken} to</div><h className={styles.paymentcompletiondatatxt}>{props.receiver}</h></div></>}
+                {txHash ? <div className={styles.txlinkdiv}><a target="_blank" href={CHAINIDTODATA[String(props.network)]["EXPLORER_URL"]+txHash} className={styles.txlink}>View Transaction</a></div> : <></>}
             </div>
         </div>: <></>}
         </div>)

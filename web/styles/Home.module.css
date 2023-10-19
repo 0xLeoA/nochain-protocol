@@ -216,12 +216,7 @@
   width: 1rem;
 }
 
-.networkname {
-  font-family: 'Kanit', sans-serif;
-    font-size: 1rem;
-    color: rgb(44, 44, 44);
-    margin-bottom: 1rem;
-}
+
 
 .totalBalanceTxt {
   font-family: 'Kanit', sans-serif;
@@ -354,11 +349,6 @@
   margin-right: 0.3rem;
 }
 
-
-.balancediv {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
 
 
 @media (min-width: 1120px) { 
@@ -731,6 +721,7 @@ body.active-modal {
   border-style: solid;
   padding: 0 0rem 0.01rem 0;
   border-width: 0 0 0.15rem 0;
+  color: rgb(44, 44, 44);
 }
 
 .thiswillcostyoudiv {
@@ -738,10 +729,12 @@ body.active-modal {
   display: flex; 
   flex-direction: row;
   flex-wrap: wrap;
+  color: rgb(44, 44, 44);
 }
 
 .thiswillcostyoutxt {
   margin-right: 0.3rem;
+  color: rgb(44, 44, 44);
 }
 
 .paymentmodalcontent {
@@ -764,6 +757,7 @@ body.active-modal {
   display: flex;
   flex-direction: row;
   margin-right: 0.3rem;
+  color: rgb(44, 44, 44);
 }
 
 .paymentmodaltokenselectionimgdiv {
@@ -779,6 +773,7 @@ body.active-modal {
 
 .paymentcompletionand {
   margin-right: 0.3rem;
+  color: rgb(44, 44, 44);
 }
 
 .yesproceedbutton {
@@ -794,6 +789,9 @@ body.active-modal {
   border-radius: 0.4rem;
   cursor: pointer;
   transition-duration: 0.15s;
+  display: flex; 
+  flex-direction: row;
+  
 }
 
 .yesproceedbutton:hover {
@@ -811,4 +809,93 @@ body.active-modal {
   border-radius: 0rem;
   background-color: #e0e0e0;
   cursor:pointer;
+}
+
+.customloadingicon {
+  height: 0.8rem;
+  width: 0.8rem;
+  margin-left: 0.4rem;
+}
+
+.txlink {
+  font-size: 0.75rem;
+  color: rgb(44, 44, 44);
+  border-style: solid;
+  border-width: 0 0 0.025rem 0;
+  border-color: rgb(44, 44, 44);
+  padding-bottom: 0.05rem;
+  transition-duration: 0.015;
+}
+
+.txlink:hover{
+  opacity: 0.81;
+}
+
+.txlinkdiv {
+  margin-top: 1.5rem;
+}
+
+.paymentcompletiondatatxt {
+}
+
+.paymentcompletetxt {
+  color: rgb(44, 44, 44);
+  border-style: solid; 
+  border-width: 0 0 0.1rem 0;
+  font-weight: bold;
+}
+
+.paymentcompletiondatadiv {
+  margin-top: 2rem;
+  display: flex; 
+  flex-direction: column;
+  font-size: 0.9rem;
+    color: rgb(44, 44, 44);
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+}
+
+.pushdiv{
+  padding-top: 0.1rem;
+}
+
+.paymentcompletiontokenimg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.paymentcompletiontokenimgdiv {
+  margin: 0.1rem 0.2rem 0 0.3rem;
+}
+
+.totalbalbars {
+  margin: 0 0.25rem 0 0.5rem;
+}
+
+.networknameheaderimg {
+  height: 1.3rem;
+  border-radius: 0.1rem;
+}
+
+.networknameheaderimgdiv {
+  margin-top: 0.18rem;
+  margin-right: 0.6rem;
+}
+
+.networkname {
+  font-family: 'Kanit', sans-serif;
+  font-size: 1.3rem;
+  color: rgb(44, 44, 44);
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  padding: 0.02rem 0.5rem 0rem 0.5rem;
+}
+
+.balancediv {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

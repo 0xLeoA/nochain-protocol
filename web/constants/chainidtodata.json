@@ -1,19 +1,45 @@
 {
-    "5": {
-        "NAME": "Goerli",
-        "RPC": "https://goerli.infura.io/v3/bf03983d4b674c3498909dbba597a803",
-        "LOGO": "https://imgs.search.brave.com/LiaWUTihYxX8OluXTYyU7LJD37rQQWC_ItM6laCvny4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTAvRXRo/ZXJldW0tTG9nby1U/cmFuc3BhcmVudC5w/bmc",
-        "USDC": "0x06D0c985E429a77b86D087d556b557EB1A120D60", 
-        "USDT": "0x706369889a68ca85B4F3f1FEADE07863F04515E3", 
-        "DAI": "0x669F361D7A18e6e6EbbEDf7C9506e901b6cAD72b"
-    }, 
+
     "1442": {
+        "TYPE": "single",
         "NAME": "Polygon ZkEVM",
         "RPC": "https://rpc.public.zkevm-test.net",
         "LOGO": "https://imgs.search.brave.com/s8P0iV_9uG4OygX94_kakvKEzi1bc9F1hUHb1lF_vXI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9haXJk/cm9wcy5pby93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMy8wNi9Q/b2x5Z29uLXprRVZN/LWxvZ28uanBn",
         "USDC": "0x5d5F0AFdBdd4bC9b27053Ab9a1CD2c555C4b4D12", 
         "USDT": "0xde8A9e45fE2b57C1ba72ecD2b1aC2d7EcAAC8D3f", 
         "DAI": "0x23aA9CAa76f83cBDC2315BbF5699f107f37dFFd5", 
-        "EXECUTOR": "0xaA9181a2DdB22699E9d38D3993701bA263759533"
+        "EXECUTOR": "0xaA9181a2DdB22699E9d38D3993701bA263759533", 
+        "EXPLORER_URL": "https://testnet-zkevm.polygonscan.com/tx/"
+    }, 
+    "5001": {
+        "TYPE": "single",
+        "NAME": "Mantle", 
+        "RPC": "https://rpc.testnet.mantle.xyz", 
+        "LOGO": "https://pbs.twimg.com/profile_images/1597775748580134914/bLhE1aY1_400x400.jpg", 
+        "USDC": "0x9637fb6C06f0f23674EE5E5724E473b42fC1fc5F", 
+        "USDT": "0x1Bb19e21cbd8E3F56A8Deb7e4b97C5a729f7e09D", 
+        "DAI": "0xB7d3672d8C625dA889AA579284857BA07343737a", 
+        "EXECUTOR": "0x4e64EE8b3B0F37d82B494d7e96De9fe7fee3a202", 
+        "EXPLORER_URL": "https://explorer.testnet.mantle.xyz/tx/"
+    }, 
+    "0": {
+        "TYPE": "MULTI",
+        "NETWORKS": [5, 84531 ]
+    },
+    "5": {
+        "TYPE": "MULTI",
+        "NAME": "Goerli",
+        "RPC": "https://goerli.infura.io/v3/bf03983d4b674c3498909dbba597a803",
+        "LOGO": "https://imgs.search.brave.com/LiaWUTihYxX8OluXTYyU7LJD37rQQWC_ItM6laCvny4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTAvRXRo/ZXJldW0tTG9nby1U/cmFuc3BhcmVudC5w/bmc",
+        "USDC": "0x66d1DA59BaffC39EaC17F6282957Da2024a20cb3",
+        "USDT": "0xaD78AfC64b4b0c989907Bd4ECed09B2f3F372CAe", 
+        "DAI": "0xdba0F7Bf0C834e3234Ce4d4001523EB780B38E33"
+    }, 
+    "84531": {
+        "TYPE": "MULTI", 
+        "NAME": "Base", 
+        "USDC": "0xfA94cBDC28C5E6f856a894De88d0b78625f15fa5", 
+        "USDT": "0x9637fb6C06f0f23674EE5E5724E473b42fC1fc5F", 
+        "DAI": "0x1Bb19e21cbd8E3F56A8Deb7e4b97C5a729f7e09D"
     }
 }

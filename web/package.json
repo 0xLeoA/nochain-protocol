@@ -29,6 +29,7 @@
     "react-bootstrap": "^2.9.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",
+    "react-loading-icons": "^1.1.0",
     "react-moralis": "^1.4.2",
     "react-no-ssr": "^1.1.0",
     "react-websocket": "^2.1.0",

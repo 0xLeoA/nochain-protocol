@@ -103,7 +103,7 @@ export default function CompletePayment(props) {
             <h>In </h><button onClick={setSelectingTokenState} className={styles.selectedtokenname}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg[selectedToken]} /></div>{selectedToken}</button>
             <h>on</h><button className={styles.selectednetworkbutton}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[props.network]["LOGO"]}/></div>{CHAINIDTODATA[props.network]["NAME"]}</button>
         </div>
-        <CompletePaymentButton network={props.network} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
+        <CompletePaymentButton defineBalances={props.defineBalances} network={props.network} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
         
         
         {selectingToken ? <div className={styles.modal}>
