@@ -17,7 +17,7 @@ import { Rings, SpinningCircles, TailSpin , Circles, Puff } from 'react-loading-
 
 
 export default function CompletePaymentButton(props) {
-    
+    const chains =[5, 84531]
  
     const transferAbi = {
         inputs: [
@@ -175,7 +175,7 @@ export default function CompletePaymentButton(props) {
     let prevPropsAmount = props.amount;
     let prevPropsReceiver = props.receiver;
     useEffect(() => { 
-            setShowErrors(!(isWholeNumber(props.amount) && isValidReceiver(props.receiver) && sufficientBalance()))
+            setShowErrors(!(isWholeNumber(props.amount) && isValidReceiver(props.receiver) && sufficientBalance() ))
 
     
     }, [props.amount, props.receiver])
@@ -374,7 +374,7 @@ export default function CompletePaymentButton(props) {
                 await tx.wait() 
                 setAwaitingConfirmation(false)
                 setProceedButtonText("Payment Complete!")
-                props.defineBalances()
+                props.defineBalances(props.network)
             }
         } catch (e) {
             console.log(e)
@@ -405,8 +405,198 @@ export default function CompletePaymentButton(props) {
                     
                     
     }
+
+    function calculatePath() {
+        // props.total_bal
+        // props.amount
+        if (props[props.selectedToken] >= props.amount) {
+            tpp.push({ "token": props.selectedToken, "amount": Number(props.amount) })
+        } else if (props["USDC"] >= props.amount) {
+            tpp.push({ "token":  "USDC", "amount": Number(props.amount) })
+        } else if (props["USDT"] >= props.amount) {
+            tpp.push({ "token":  "USDT", "amount": Number(props.amount) })
+        }
+        else if (props["DAI"] >= props.amount) {
+            tpp.push({ "token":  "DAI", "amount": Number(props.amount) })
+        } else {
+            let usdc_usdt = props.USDC + props.USDT
+            let dai_usdc = props.DAI + props.USDC
+            let dai_usdt = props.DAI + props.USDT
+
+            const filteredTokens = filterListByValue(["USDC", "USDT", "DAI"], props.selectedToken)
+            // acronym for selectedToken_nonSelectedToken#1
+            let st_nst1 =  props[props.selectedToken] + props[filteredTokens[0]] 
+            let st_nst2 = props[props.selectedToken] +  props[filteredTokens[1]] 
+            let nst1_nst2 = props[filteredTokens[0]] + props[filteredTokens[0]] 
+            console.log(props.selectedToken)
+            
+            // test is usdc & usdt balanaces are sufficient to complete payment
+            if (st_nst1 >= props.amount) {
+                tpp.push({ "token": String(props.selectedToken), "amount": props[props.selectedToken] })
+                tpp.push({ "token": filteredTokens[0], "amount": props.amount-props[props.selectedToken]})
+            } // do the same for the rest
+            else if (st_nst2 >= props.amount) {
+                 tpp.push({ "token": props.selectedToken, "amount": props[props.selectedToken] })
+                tpp.push({ "token": filteredTokens[1], "amount": props.amount-props[props.selectedToken]})
+            } else if (dai_usdt >= props.amount) {
+                let dict = {"nst1": filteredTokens[0], "nst2": filteredTokens[1]}
+                let sorted = sortDictionaryByValue({ "nst1": props[filteredTokens[0]], "nst2": props[filteredTokens[1]] })
+                tpp.push({ "token": dict[sorted[1]], "amount": props[dict[sorted[1]]] })
+                tpp.push({ "token": dict[sorted[0]], "amount": props.amount-dict[sorted[1]]})
+            } else {
+                // otherwise, all three tokens will have to be transferred 
+                let sorted = sortDictionaryByValue({ "DAI": props.USDC, "USDT": props.USDT, "USDC": props.DAI })
+                tpp.push({ "token": sorted[2], "amount": props[sorted[2]] })
+                tpp.push({ "token": sorted[1], "amount": props[sorted[1]] })
+                tpp.push({ "token": sorted[0], "amount": props.amount-props[sorted[1]]-props[sorted[2]] })
+              
+            }
+        }
+        return tpp
+        
+    }
+
+    // calculates total amount of e.g. usdc owned on supported chains 
+    async function calculateCrossChainTokenBalance(token) {
+        let balance = 0 
+        chains.forEach((chain) => {
+            balance += props.ccBalances[chain][token]
+        })
+        return balance
+    }
+
+    /**
+    function sortDictionaryByValue(inputDict) {
+        // Convert the object into an array of key-value pairs
+        const entries = Object.entries(inputDict);
+
+        // Sort the array based on the values (amounts)
+        entries.sort((a, b) => a[1] - b[1]);
+
+        // Extract and return the keys (crypto names) from the sorted array
+        const sortedCryptoNames = entries.map((entry) => entry[0]);
+
+        return sortedCryptoNames;
+            }
+    **/
+
+
+
+
+    async function calculateCCPaymentPath() {
+    
+        let tpp = []
+        
+        if (props.ccBalances[props.selectedNetwork][props.selectedToken] >= props.amount) {
+            // logic for if there is enough of the destination token on the destination chain 
+            tpp.push({"network": props.selectedNetwork, "token": props.selectedToken, "amount": Number(props.amount)})
+        } else if (props.ccBalances[props.selectedNetwork]["USDC"] + props.ccBalances[props.selectedNetwork]["USDT"] + props.ccBalances[props.selectedNetwork]["DAI"] >= props.amount) {
+            // logic for if destination network balance is sufficient
+            const tknOrder = sortDictionaryByValue({ "USDC": props.ccBalances[props.selectedNetwork]["USDC"], "USDT": props.ccBalances[props.selectedNetwork]["USDT"], "DAI": props.ccBalances[props.selectedNetwork]["DAI"]})
+            let bal_dict = { "USDC": props.ccBalances[props.selectedNetwork]["USDC"], "USDT": props.ccBalances[props.selectedNetwork]["USDT"], "DAI": props.ccBalances[props.selectedNetwork]["DAI"]}
+
+            let valueLeft = props.amount
+            
+
+            for (let i = 0; i < tknOrder.length; i++) {
+
+                let token = tknOrder[tknOrder.length - i - 1]
+                let balance = bal_dict[token]
+
+                if (balance >= valueLeft) {
+                        tpp.push({ "network": props.selectedNetwork, "token": token, "amount": valueLeft})
+                        break
+                    } else {
+                        tpp.push({ "network": props.selectedNetwork, "token": token, "amount": balance })
+                        valueLeft -= balance
+                    }
+            }
+        
+        
+        } else {
+            // multichain calculation logic here
+            if (await calculateCrossChainTokenBalance(props.selectedToken) >= props.amount) {
+                console.log(await calculateCrossChainTokenBalance(props.selectedToken) >= props.amount)
+                //logic for if crosschain balance of destination token is sufficient 
+                let crossChainTknBalance = []
+                chains.forEach((chain) => {
+                    crossChainTknBalance.push({'network': chain, 'amount': props.ccBalances[chain][props.selectedToken] })
+                })
+                console.log(crossChainTknBalance)
+                let sortingDict = {}
+                crossChainTknBalance.forEach((item) => {
+                    sortingDict[item.network] = item.amount
+                })
+                let chainsSorted
+                console.log(chainsSorted = sortDictionaryByValue(sortingDict))
+
+                let valueLeft = props.amount 
+                
+                
+                for (let i = 0; i < chains.length; i++) {
+
+
+                    let tkn_amount = props.ccBalances[chainsSorted[chainsSorted.length - 1 - i]][props.selectedToken]
+
+                    if (tkn_amount >= valueLeft) {
+                        tpp.push({ "network": chainsSorted[chainsSorted.length - 1 - i], "token": props.selectedToken, "amount": valueLeft })
+                        break
+                    } else {
+                        tpp.push({ "network": chainsSorted[chainsSorted.length - 1 - i], "token": props.selectedToken, "amount": tkn_amount })
+                        valueLeft -= tkn_amount
+                    }
+                }
+
+                console.log(tpp)
+                //console.log("Leo")
+            } else {
+                // otherwise logic
+                let crossChainTknBalanceDict = {}
+                let crossChainBalanceTknDictWithData = {}
+                chains.forEach((chain) => {
+                    const tokens = ["USDC", "USDT", "DAI"]
+                    tokens.forEach((token) => {
+                        crossChainBalanceTknDictWithData[token + "_" + String(chain)] = {"network": chain, "amount": Number(props.ccBalances[chain][token])}
+                        crossChainTknBalanceDict[token + "_" + String(chain)] = props.ccBalances[chain][token]
+                    })
+                    
+                })
+                let crossChainTknsSorted = sortDictionaryByValue(crossChainTknBalanceDict)
+
+                let valueLeft = props.amount 
+
+                for (let i = 0; i < crossChainTknsSorted.length; i++) {
+                    let token = crossChainTknsSorted[crossChainTknsSorted.length -1 - i]
+                    let tkn_data = crossChainBalanceTknDictWithData[token]
+                    
+                    if (tkn_data.amount >= valueLeft) {
+                        
+                        tpp.push({ "network": crossChainBalanceTknDictWithData[token].network, "token": token, "amount": valueLeft })
+                        
+                        break
+                    } else {
+                        //console.log(valueLeft)
+                        //console.log(crossChainTknsSorted)
+                        tpp.push({ "network": crossChainBalanceTknDictWithData[token].network, "token": token, "amount": crossChainBalanceTknDictWithData[token].amount })
+                        valueLeft = valueLeft - crossChainBalanceTknDictWithData[token].amount
+                    }
+                } 
+
+                
+                }
+                
+
+        }
+        console.log(tpp)
+
+        }
+    
+    
+    calculateCCPaymentPath()
+    
+
     return (<div className={styles.paymentcompletionbuttondiv}>
-        <button disabled={showErrors && initialized} onClick={async () => {
+        <button disabled={(showErrors && initialized) || props.loadingBals} onClick={async () => {
             initialize(true)
             if (!showErrors) {
                 SetPaymentPath(await calculatePath())
@@ -418,7 +608,8 @@ export default function CompletePaymentButton(props) {
         <div className={styles.paymentinputerrorsdiv}>
             {showErrors && initialized? sufficientBalance() ?  <></> : <h className={styles.paymentinputerror}>insufficient balance</h> : <></>}
             {showErrors && initialized ? isWholeNumber(props.amount) ? <></> : <h className={styles.paymentinputerror}>invalid amount</h> : <></>}
-         {showErrors && initialized ? isValidReceiver(props.receiver)? <></> : <h className={styles.paymentinputerror}>invalid receiver</h>: <></>}
+            {showErrors && initialized ? isValidReceiver(props.receiver) ? <></> : <h className={styles.paymentinputerror}>invalid receiver</h> : <></>}
+            {showErrors && initialized ? props.loadingBals ? <h className={styles.paymentinputerror}>loading balances</h> : <></> : <></>}
         </div>
         {modalOpen ? <div className={styles.modal}>
             <div onClick={() => {setModalOpen(false)}} className={styles.overlay} />
@@ -443,5 +634,4 @@ export default function CompletePaymentButton(props) {
                 {txHash ? <div className={styles.txlinkdiv}><a target="_blank" href={CHAINIDTODATA[String(props.network)]["EXPLORER_URL"]+txHash} className={styles.txlink}>View Transaction</a></div> : <></>}
             </div>
         </div>: <></>}
-        </div>)
-}
+</div>)}

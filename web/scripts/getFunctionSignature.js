@@ -6,6 +6,8 @@ const funcSignature = (abi, params) => {
     return(functionSignature)
 }
 
+
+
 console.log(funcSignature({
         inputs: [
             {

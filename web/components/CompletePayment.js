@@ -8,7 +8,7 @@ import Balances from './Balances';
 import { CHAINIDTODATA, MetaTxERC20ABI } from '@/constants';
 import { useState, useEffect } from 'react';
 import CompletePaymentButton from './CompletePaymentButton';
-
+import { FaTimes } from 'react-icons/fa';
 
 
 export default function CompletePayment(props) {
@@ -22,7 +22,8 @@ export default function CompletePayment(props) {
     const setSelectingTokenState = () => {
         setSelectingToken(!selectingToken)
     }
-
+    const [ccSelectedNetwork, setCCSelectedNetwork] = useState(5)
+    const [selecingCCNetwork, setSelectingCCNetwork] =useState(false)
     
 
     const tokenToImg = {
@@ -78,8 +79,10 @@ export default function CompletePayment(props) {
   fontFamily: "'Kanit', sans-serif",
         fontSize: '0.8rem',
   maxWidth: "7rem"
-  };
-    return (<div className={styles.paymentsettinsdiv}>
+    };
+
+   
+    return (<>{props.networkType !== "multi" ? <div className={styles.paymentsettinsdiv}>
         <div className={styles.toppaymentsettingsdiv}>
         <h>Send</h>
         <input
@@ -103,8 +106,7 @@ export default function CompletePayment(props) {
             <h>In </h><button onClick={setSelectingTokenState} className={styles.selectedtokenname}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg[selectedToken]} /></div>{selectedToken}</button>
             <h>on</h><button className={styles.selectednetworkbutton}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[props.network]["LOGO"]}/></div>{CHAINIDTODATA[props.network]["NAME"]}</button>
         </div>
-        <CompletePaymentButton defineBalances={props.defineBalances} network={props.network} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
-        
+        <CompletePaymentButton networkType={props.networkType}   loadingBals={props.loadingBals}  defineBalances={props.defineBalances} network={props.network} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
         
         {selectingToken ? <div className={styles.modal}>
             <div onClick={setSelectingTokenState} className={styles.overlay} />
@@ -130,5 +132,77 @@ export default function CompletePayment(props) {
                 </div>
             </div>
         </div>: <></>}
-    </div>)
+    </div> : 
+    <div className={styles.paymentsettinsdiv}>
+        <div className={styles.toppaymentsettingsdiv}>
+        <h>Send</h>
+        <input
+            
+      onChange={handleAmountChange}
+        type="text"
+        id="amountInput"
+            placeholder="69"
+           style={amountInputStyle}
+        />
+        <h>$USD to </h>
+        <input
+            type="text"
+            onChange={handleReceiverChange}
+            id="receiverInput"
+            style={receivertInputStyle}
+            placeholder="vitalik.eth"
+            className={styles.receiverinput}
+            /></div>
+        <div className={styles.bottompaymentsettingsdiv}>
+            <h>In </h><button onClick={setSelectingTokenState} className={styles.selectedtokenname}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg[selectedToken]} /></div>{selectedToken}</button>
+            <h>on</h><button className={styles.selectednetworkbutton} onClick={() => {setSelectingCCNetwork(true)}}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[ccSelectedNetwork]["LOGO"]}/></div>{CHAINIDTODATA[ccSelectedNetwork]["NAME"]}</button>
+        </div>
+        <CompletePaymentButton defineBalances={props.defineBalances} ccBalances={props.ccBalances} network={props.network} selectedNetwork={ccSelectedNetwork} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
+            {selecingCCNetwork ? 
+        <div className={styles.modal}>
+                    <div onClick={() => { setSelectingCCNetwork(!selecingCCNetwork) }} className={styles.overlay} />
+                    <div className={styles.ccmodalcontent}>
+                        <div><button className={styles.closeccnetworkselectionmodalbutton} onClick={() => {setSelectingCCNetwork(false)}}><FaTimes/></button></div>
+                <div>
+                <div>
+                    <button onClick={() => {
+                        setSelectingCCNetwork(false)
+                        setCCSelectedNetwork(5)
+                    }} className={styles.ccmodaltokenselectionbutton}><div className={styles.modaltokenselectionimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[5]["LOGO"]} /></div>Goerli</button>
+                </div>
+                    <div>
+                <button onClick={() => {
+                        setSelectingCCNetwork(false)
+                        setCCSelectedNetwork(84531)
+                    }}  className={styles.ccmodaltokenselectionbutton}><div className={styles.modaltokenselectionimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[84531]["LOGO"]} /></div>Base</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        : <></>}
+        {selectingToken ? <div className={styles.modal}>
+            <div onClick={setSelectingTokenState} className={styles.overlay} />
+            <div className={styles.modalcontent}>
+                
+                <div>
+                    <button onClick={() => {
+                        setSelectingToken(false)
+                        setSelectedToken("USDC")
+                    }} className={styles.modaltokenselectionbutton}><div className={styles.modaltokenselectionimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg["USDC"]} /></div>USDC</button>
+                </div>
+                    <div>
+                <button onClick={() => {
+                        setSelectingToken(false)
+                        setSelectedToken("USDT")
+                    }}  className={styles.modaltokenselectionbutton}><div className={styles.modaltokenselectionimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg["USDT"]} /></div>USDT</button>
+                </div>
+                <div>
+                <button onClick={() => {
+                        setSelectingToken(false)
+                        setSelectedToken("DAI")
+                    }}  className={styles.modaltokenselectionbutton}><div className={styles.modaltokenselectionimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg["DAI"]} /></div>DAI</button>
+                </div>
+            </div>
+        </div>: <></>}
+    </div>}</>)
 }

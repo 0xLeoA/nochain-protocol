@@ -24,12 +24,14 @@
     }, 
     "0": {
         "TYPE": "MULTI",
-        "NETWORKS": [5, 84531 ]
+        "NETWORKS": [5, 84531 ], 
+        "LOGO": "https://pbs.twimg.com/profile_images/1535292066397409280/r-5azuJ__400x400.jpg", 
+        "NAME": "Multi-Chain"
     },
     "5": {
         "TYPE": "MULTI",
         "NAME": "Goerli",
-        "RPC": "https://goerli.infura.io/v3/bf03983d4b674c3498909dbba597a803",
+        "RPC": "https://ethereum-goerli.publicnode.com",
         "LOGO": "https://imgs.search.brave.com/LiaWUTihYxX8OluXTYyU7LJD37rQQWC_ItM6laCvny4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMTAvRXRo/ZXJldW0tTG9nby1U/cmFuc3BhcmVudC5w/bmc",
         "USDC": "0x66d1DA59BaffC39EaC17F6282957Da2024a20cb3",
         "USDT": "0xaD78AfC64b4b0c989907Bd4ECed09B2f3F372CAe", 
@@ -40,6 +42,8 @@
         "NAME": "Base", 
         "USDC": "0xfA94cBDC28C5E6f856a894De88d0b78625f15fa5", 
         "USDT": "0x9637fb6C06f0f23674EE5E5724E473b42fC1fc5F", 
-        "DAI": "0x1Bb19e21cbd8E3F56A8Deb7e4b97C5a729f7e09D"
+        "DAI": "0x1Bb19e21cbd8E3F56A8Deb7e4b97C5a729f7e09D", 
+        "RPC": "https://goerli.base.org",
+        "LOGO": "https://pbs.twimg.com/profile_images/1632431836096782338/W-9qsu1e_400x400.jpg"
     }
 }
