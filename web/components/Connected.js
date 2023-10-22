@@ -77,7 +77,7 @@ export default function Connected() {
 
     const [ccDefined, setCCDefined] = useState(false)
 
-    async function getMultiChainBalances() {
+    const getMultiChainBalances = async() => {
         setCCDefined(false)
         let bals = {}
         let tb = 0
@@ -149,7 +149,7 @@ export default function Connected() {
                 <h className={styles.networkname}><div className={styles.networknameheaderimgdiv}><img className={styles.networknameheaderimg} src={ CHAINIDTODATA[String(network)]['LOGO'] } /></div>{CHAINIDTODATA[String(network)]['NAME']}</h>
                 <Balances ccDefined={ccDefined}  ccTotalBal={totalBal}  ccBalances={ccBalances} networkType={networkType} loadingBals={!balDefined} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total = {balances.TOTAL} />
                 
-                <CompletePayment networkType={networkType}  loadingBals={!balDefined} ccBalances={ccBalances} defineBalances={defineBalances}  network={network} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total_bal={networkType == "multi" ? ccUSDC + ccUSDT + ccDAI :balances["TOTAL"]} />
+                <CompletePayment networkType={networkType}  loadingBals={!balDefined} ccBalances={ccBalances} defineBalances={networkType == "multi"? getMultiChainBalances : defineBalances}  network={network} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total_bal={networkType == "multi" ? ccUSDC + ccUSDT + ccDAI :balances["TOTAL"]} />
                 
             </div> 
         </div>

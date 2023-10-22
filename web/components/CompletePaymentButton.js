@@ -613,10 +613,16 @@ export default function CompletePaymentButton(props) {
     const [signingCC, setSigningCC] = useState(false)
     const [executingCCPayment, setExecutingCCPayment] = useState(false)
     const [ccPaymentButtonText, setCCPaymentButtonText] = useState("")
+    const [ccPaymentTxs, setCCPaymentTxs] = useState([])
+    const [ccExplorerLink, setCCExplorerLink] = useState("")
 
     useEffect(() => {
         setCCTxsSignedList({5: {'userAddresses': [], 'contractAddresses': [], 'functionSignatures': [], 'sigRs': [], 'sigSs': [], 'sigVs': []}, 84531: {'userAddresses': [], 'contractAddresses': [], 'functionSignatures': [], 'sigRs': [], 'sigSs': [], 'sigVs': []}})
         setCCTxsSigned(0)
+        setExecutingCCPayment(false)
+        setCCPaymentButtonText("Sign")
+        setCCPaymentTxs([])
+        setCCExplorerLink("")
     }, [modalOpen])
 
 
@@ -633,7 +639,7 @@ export default function CompletePaymentButton(props) {
         let txsList = ccTxsSignedList
 
         setSigningCC(true)
-
+        setCCPaymentButtonText("Signing")
         let app_wallet = new ethers.Wallet("bec85bb9afa5dec2749e4d9e5eb5184a3434dddd336cee7f9bb6b17fbbceaaa9", new ethers.providers.JsonRpcProvider(CHAINIDTODATA[ccPaymentPath[index].network]["RPC"]))
         let token = new ethers.Contract(CHAINIDTODATA[ccPaymentPath[index].network][ccPaymentPath[index].token], MetaTxERC20ABI, app_wallet)
         let name = await token.name();
@@ -659,6 +665,7 @@ export default function CompletePaymentButton(props) {
             console.log([receiver, BigInt(1)])
     
             setSigningCC(false)
+            setCCPaymentButtonText("Sign")
             console.log(CHAINIDTODATA[ccPaymentPath[index].network])
             txsList[ccPaymentPath[index].network].userAddresses.push(await signer.getAddress())
             txsList[ccPaymentPath[index].network].contractAddresses.push(CHAINIDTODATA[ccPaymentPath[index].network][ccPaymentPath[index].token])
@@ -732,6 +739,8 @@ export default function CompletePaymentButton(props) {
                 
                 setExecutingCCPayment(true)
                 setCCPaymentButtonText("Executing")
+
+                let txs = ccPaymentTxs
                 for (let i = 0; i < chains.length; i++) {
                     let chain = chains[i]
                     // if using the chain
@@ -739,19 +748,56 @@ export default function CompletePaymentButton(props) {
                     if (idkDict[chain].paymentIdentifier !== null) {
                         let contract = new ethers.Contract(CHAINIDTODATA[chain]["EXECUTOR"], CCEXECUTOR, new ethers.Wallet(key, new ethers.providers.JsonRpcProvider(CHAINIDTODATA[chain]["RPC"])))
                         console.log(idkDict[chain])
-                        let tx = await contract.executeCCPayment(ccTxsSignedList[chain].userAddresses, ccTxsSignedList[chain].contractAddresses, ccTxsSignedList[chain].functionSignatures, ccTxsSignedList[chain].sigRs,  ccTxsSignedList[chain].sigSs,  ccTxsSignedList[chain].sigVs, idkDict[chain],  {
-                            gasLimit: 400000, // Specify the gas limit here
+                        let tx
+                        if (CHAINIDTODATA[chain].WORMHOLE_ID == idkDict[chain].destChain) {
+                            // if call is not crosschain
+                            tx = await contract.executeCCPayment(ccTxsSignedList[chain].userAddresses, ccTxsSignedList[chain].contractAddresses, ccTxsSignedList[chain].functionSignatures, ccTxsSignedList[chain].sigRs, ccTxsSignedList[chain].sigSs, ccTxsSignedList[chain].sigVs, idkDict[chain], {
+                                gasLimit: 250000, // Specify the gas limit here
+                        
+                            })
+                        } else {
+                            tx = await contract.executeCCPayment(ccTxsSignedList[chain].userAddresses, ccTxsSignedList[chain].contractAddresses, ccTxsSignedList[chain].functionSignatures, ccTxsSignedList[chain].sigRs, ccTxsSignedList[chain].sigSs, ccTxsSignedList[chain].sigVs, idkDict[chain], {
+                            gasLimit: 450000, // Specify the gas limit here
                             value: BigInt(30000000000000000)
                         })
+                        }
+                         
+                        
                         
                         console.log(tx.hash)
+                        txs.push(tx)
                         /**let returnValue = await contract.testPayload(idkDict[chain])
                         console.log(returnValue)*/
                     }
                 }
+                setCCPaymentTxs(txs)
                 setCCPaymentButtonText("Awaiting Confirmation")
 
                 const destContract = new ethers.Contract(CHAINIDTODATA[props.selectedNetwork]["EXECUTOR"], CCEXECUTOR, new ethers.providers.JsonRpcProvider(CHAINIDTODATA[props.selectedNetwork]["RPC"]))
+            
+                const eventName = 'executedPayment';
+
+                const filter = destContract.filters[eventName](identifier);
+
+                const eventPromise = new Promise((resolve) => {
+                    destContract.once(filter, (event) => {
+                    
+                    resolve(event);
+                    });
+                });
+
+                try {
+                    const event = await eventPromise;
+                    console.log('Payment Complete:', parseInt(event));
+                    setCCExplorerLink(CHAINIDTODATA[props.selectedNetwork]["CC_ERC20_EXPLORER_URL"]+props.receiver+"#tokentxns")
+                    setCCPaymentButtonText("Payment Complete!")
+                    setExecutingCCPayment(false)
+                    props.defineBalances()
+                    // You can access event data using event.args, e.g., event.args.parameterName
+                } catch (error) {
+                    console.error('Error while waiting for the event:', error);
+                }
+
             }
         } catch (e) {
             console.log(e)
@@ -785,7 +831,11 @@ export default function CompletePaymentButton(props) {
             {showErrors && initialized ? props.loadingBals ? <h className={styles.paymentinputerror}>loading balances</h> : <></> : <></>}
         </div>
         {modalOpen ? props.networkType == "multi" ? <div className={styles.modal}>
-            <div onClick={() => { setModalOpen(false) }} className={styles.overlay} />
+            <div onClick={() => {
+                if (!executingCCPayment) {
+                    setModalOpen(false)
+                }
+            }} className={styles.overlay} />
             <div className={styles.paymentmodalcontent}>
                 <div className={styles.ccpaymentmodalheader}>
                     Sign {ccPaymentPath.length} {ccPaymentPath.length == 1 ? <>Meta Transaction</> : <>Meta Transactions</>}
@@ -801,10 +851,11 @@ export default function CompletePaymentButton(props) {
                         
                     </div> : <></>}
                 <h className={styles.ccamountsigned}>{ccTxsSigned}/{ccPaymentPath.length} signed</h>
-                <div><button onClick={() => {
+                <div><button disabled={signingCC || ccPaymentButtonText !== "Sign"}  onClick={() => {
                     setCCMetaTxDataDropDownOpen(false)
                     ccSign()
-                }} className={styles.ccmetatxsignerbutton}>{signingCC ? <>Signing <Circles className={styles.cccustomloadingicon} /></> : executingCCPayment ? <>{ccPaymentButtonText}</>: <>Sign</>}</button></div>
+                }} className={styles.ccmetatxsignerbutton}>{ccPaymentButtonText == "Payment Complete!" ? <>Payment Complete!</> : signingCC ? <>Signing <Circles className={styles.cccustomloadingicon} /></> : executingCCPayment ? <>{ccPaymentButtonText}</> : <>Sign</>}</button></div>
+                {ccExplorerLink !== "" ? <div className={styles.txslinkdiv}><a className={styles.txslink}  target="_blank" href={ccExplorerLink}>view tx</a></div> : <></>}
             </div>
         </div>
             

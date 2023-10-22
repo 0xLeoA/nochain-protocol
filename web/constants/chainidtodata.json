@@ -38,7 +38,8 @@
         "DAI": "0xD83235DE2e056DD75e7D5D9ea646fd4af6aC80da", 
         "EXECUTOR": "0x2749894dA86EaAB9ffbc5c2EE9016C140bc3b26a", 
         "WORMHOLE_ID": 2, 
-        "relayer": "0x28D8F1Be96f97C1387e94A53e00eCcFb4E75175a"
+        "relayer": "0x28D8F1Be96f97C1387e94A53e00eCcFb4E75175a", 
+        "CC_ERC20_EXPLORER_URL": "https://goerli.etherscan.io/address/"
     }, 
     "84531": {
         "TYPE": "MULTI", 
@@ -50,6 +51,7 @@
         "LOGO": "https://pbs.twimg.com/profile_images/1632431836096782338/W-9qsu1e_400x400.jpg", 
         "EXECUTOR": "0x1fd757D951b43d75B4e14DFBbaa1180E4867f73C", 
         "WORMHOLE_ID": 30, 
-        "relayer": "0xea8029CD7FCAEFFcD1F53686430Db0Fc8ed384E1"
+        "relayer": "0xea8029CD7FCAEFFcD1F53686430Db0Fc8ed384E1", 
+        "CC_ERC20_EXPLORER_URL": "https://goerli.basescan.org/address/"
     }
 }
