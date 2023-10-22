@@ -1,0 +1,515 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "bytes",
+				"name": "payload",
+				"type": "bytes"
+			}
+		],
+		"name": "callWithPayload",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint16",
+				"name": "destChain",
+				"type": "uint16"
+			},
+			{
+				"internalType": "address",
+				"name": "receiver",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "crossChainNoChainAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "crosschainTokenAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes",
+				"name": "payload",
+				"type": "bytes"
+			}
+		],
+		"name": "completeCrossChainTransfer",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "userAddrs",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "CAs",
+				"type": "address[]"
+			},
+			{
+				"internalType": "bytes[]",
+				"name": "FSs",
+				"type": "bytes[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "sigRs",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "sigSs",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "uint8[]",
+				"name": "sigVs",
+				"type": "uint8[]"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "paymentIdentifier",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "destinationToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "ccDestinationToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "tokensToSwap",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amountsOfTokensToSwap",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint16",
+						"name": "destChain",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint16",
+						"name": "totalChainsUsed",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint256",
+						"name": "paymentAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ccPaymentAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "crossChainNoChainAddr",
+						"type": "address"
+					}
+				],
+				"internalType": "struct NoChainProtocol.ccPaymentData",
+				"name": "paymentData",
+				"type": "tuple"
+			}
+		],
+		"name": "executeCCPayment",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "userAddrs",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "CAs",
+				"type": "address[]"
+			},
+			{
+				"internalType": "bytes[]",
+				"name": "FSs",
+				"type": "bytes[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "sigRs",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "sigSs",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "uint8[]",
+				"name": "sigVs",
+				"type": "uint8[]"
+			}
+		],
+		"name": "executeMetaTxs",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract IBridgeAndSwapper",
+				"name": "_nochainHelper",
+				"type": "address"
+			},
+			{
+				"internalType": "uint16",
+				"name": "_thisChain",
+				"type": "uint16"
+			},
+			{
+				"internalType": "address",
+				"name": "wormhole",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "paymentIdentifier",
+				"type": "uint256"
+			}
+		],
+		"name": "MetaTxsExecuted",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "paymentIdentifier",
+				"type": "uint256"
+			}
+		],
+		"name": "SwapsSuccessful",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "paymentIdentifier",
+				"type": "uint256"
+			}
+		],
+		"name": "executedPayment",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "paymentIdentifier",
+				"type": "uint256"
+			}
+		],
+		"name": "finality",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "paymentIdentifier",
+				"type": "uint256"
+			}
+		],
+		"name": "receivedPayload",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes",
+				"name": "payload",
+				"type": "bytes"
+			},
+			{
+				"internalType": "bytes[]",
+				"name": "",
+				"type": "bytes[]"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint16",
+				"name": "sourceChain",
+				"type": "uint16"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "deliveryHash",
+				"type": "bytes32"
+			}
+		],
+		"name": "receiveWormholeMessages",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	},
+	{
+		"inputs": [],
+		"name": "helper",
+		"outputs": [
+			{
+				"internalType": "contract IBridgeAndSwapper",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "meta_tx",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "contractAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes",
+				"name": "functionSignature",
+				"type": "bytes"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "sigR",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "sigS",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint8",
+				"name": "sigV",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "paymentIdentifierToTxsSeen",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint16",
+				"name": "targetChain",
+				"type": "uint16"
+			}
+		],
+		"name": "quoteCrossChainGreeting",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "cost",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "paymentIdentifier",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "destinationToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "ccDestinationToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address[]",
+						"name": "tokensToSwap",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amountsOfTokensToSwap",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint16",
+						"name": "destChain",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint16",
+						"name": "totalChainsUsed",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint256",
+						"name": "paymentAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ccPaymentAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "crossChainNoChainAddr",
+						"type": "address"
+					}
+				],
+				"internalType": "struct NoChainProtocol.ccPaymentData",
+				"name": "paymentData",
+				"type": "tuple"
+			}
+		],
+		"name": "testPaymentData",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "thisChain",
+		"outputs": [
+			{
+				"internalType": "uint16",
+				"name": "",
+				"type": "uint16"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "wormholeRelayer",
+		"outputs": [
+			{
+				"internalType": "contract IWormholeRelayer",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]

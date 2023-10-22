@@ -1055,3 +1055,74 @@ body.active-modal {
 .ccmodaltokenselectionbutton:hover {
   opacity: 0.8;
 }
+
+.ccpaymentmodalheader {
+  letter-spacing: 0.05rem;
+  font-size: 0.9rem;
+  color: rgb(44, 44, 44);
+}
+
+.ccpaymentmodaltxexpansionbutton {
+  background: transparent;
+  border-style: none;
+  cursor: pointer;
+  padding: 0.1rem;
+}
+
+.ccpaymentmodaltxexpansionbuttondiv {
+  margin-left: 0.1rem; 
+  
+}
+
+.ccmetatxsignerbutton {
+  margin-top: 1.7rem;
+  background-color: rgb(44, 44, 44);
+  border-style: none;
+  color: white;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  border-radius: 0.2rem;
+  font-family: 'Kanit', sans-serif;
+  cursor: pointer;
+  transition-duration: 0.15s;
+}
+
+.ccmetatxsignerbutton:hover {
+  opacity: 0.85;
+}
+
+.ccpaymentmodaltxexpandeddata {
+  font-size: 0.6rem;
+  letter-spacing: 0.03rem;
+  margin-top: 1rem;
+}
+
+.ccpaymentmodaltxexpandedindividualtokendata {
+  margin-top: 0.2rem;
+  display: flex;
+}
+
+.ccpaymentmodaltxexpandedindividualtokendataimgdiv {
+  margin-right: 0.1rem;
+  margin-left: 0.1rem;
+  margin-top: 0.05rem;
+}
+
+.ccpaymentmodaltxexpandedindividualtokendataimg {
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-right: 0.1rem;
+  margin-left: 0.1rem
+}
+
+.ccamountsigned {
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  color: rgb(44,44,44);
+}
+
+.cccustomloadingicon {
+  height: 0.8rem;
+  width: 0.8rem;
+  margin-left: 0.2rem;
+  color: #cbc9c9;
+}

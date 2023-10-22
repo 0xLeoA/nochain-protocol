@@ -59,9 +59,13 @@ export default function Connected() {
         for (let i = 0; i < 3; i++) {
             const tkn = new ethers.Contract(CHAINIDTODATA[chainId][tkns[i]], MetaTxERC20ABI, provider);
             let balance = parseInt((await tkn.balanceOf(address))/10**16)/10**2
-            bals[tkns[i]] = balance
-        }
+            bals[tkns[i]] = balance - .1
+            if (bals[tkns[i]] < 0) {
+                bals[tkns[i]] = 0
+            }
 
+        }
+ 
 
         return bals
     }
@@ -132,6 +136,7 @@ export default function Connected() {
         }
     }, [networkType])
 
+    useEffect(() => { getMultiChainBalances()}, [])
     
 
     return <div className={styles.container}>
@@ -146,7 +151,7 @@ export default function Connected() {
                 
                 <CompletePayment networkType={networkType}  loadingBals={!balDefined} ccBalances={ccBalances} defineBalances={defineBalances}  network={network} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total_bal={networkType == "multi" ? ccUSDC + ccUSDT + ccDAI :balances["TOTAL"]} />
                 
-            </div>
+            </div> 
         </div>
   </div>
 }

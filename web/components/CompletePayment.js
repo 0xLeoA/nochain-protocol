@@ -157,7 +157,7 @@ export default function CompletePayment(props) {
             <h>In </h><button onClick={setSelectingTokenState} className={styles.selectedtokenname}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={tokenToImg[selectedToken]} /></div>{selectedToken}</button>
             <h>on</h><button className={styles.selectednetworkbutton} onClick={() => {setSelectingCCNetwork(true)}}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[ccSelectedNetwork]["LOGO"]}/></div>{CHAINIDTODATA[ccSelectedNetwork]["NAME"]}</button>
         </div>
-        <CompletePaymentButton defineBalances={props.defineBalances} ccBalances={props.ccBalances} network={props.network} selectedNetwork={ccSelectedNetwork} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
+            <CompletePaymentButton defineBalances={props.defineBalances} ccBalances={props.ccBalances} network={props.network} networkType={props.networkType}  selectedNetwork={ccSelectedNetwork} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
             {selecingCCNetwork ? 
         <div className={styles.modal}>
                     <div onClick={() => { setSelectingCCNetwork(!selecingCCNetwork) }} className={styles.overlay} />
