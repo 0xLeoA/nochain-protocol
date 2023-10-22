@@ -830,6 +830,7 @@ export default function CompletePaymentButton(props) {
             {showErrors && initialized ? isValidReceiver(props.receiver) ? <></> : <h className={styles.paymentinputerror}>invalid receiver</h> : <></>}
             {showErrors && initialized ? props.loadingBals ? <h className={styles.paymentinputerror}>loading balances</h> : <></> : <></>}
         </div>
+        
         {modalOpen ? props.networkType == "multi" ? <div className={styles.modal}>
             <div onClick={() => {
                 if (!executingCCPayment) {
@@ -856,8 +857,11 @@ export default function CompletePaymentButton(props) {
                     ccSign()
                 }} className={styles.ccmetatxsignerbutton}>{ccPaymentButtonText == "Payment Complete!" ? <>Payment Complete!</> : signingCC ? <>Signing <Circles className={styles.cccustomloadingicon} /></> : executingCCPayment ? <>{ccPaymentButtonText}</> : <>Sign</>}</button></div>
                 {ccExplorerLink !== "" ? <div className={styles.txslinkdiv}><a className={styles.txslink}  target="_blank" href={ccExplorerLink}>view tx</a></div> : <></>}
+            
             </div>
+            
         </div>
+            
             
             
             : <div className={styles.modal}>
@@ -882,5 +886,6 @@ export default function CompletePaymentButton(props) {
                                 <h className={styles.paymentcompletiondatatxt}>Sent {props.amount} </h><div className={styles.paymentcompletiontokenimgdiv}><img src={props.tokenToImg[props.selectedToken]} className={styles.paymentcompletiontokenimg} /></div>{props.selectedToken} to</div><h className={styles.paymentcompletiondatatxt}>{props.receiver}</h></div></>}
                 {txHash ? <div className={styles.txlinkdiv}><a target="_blank" href={CHAINIDTODATA[String(props.network)]["EXPLORER_URL"]+txHash} className={styles.txlink}>View Transaction</a></div> : <></>}
             </div>
-        </div>: <></>}
+            </div> : <></>}
+        
 </div>)}

@@ -9,7 +9,8 @@
         "USDT": "0xde8A9e45fE2b57C1ba72ecD2b1aC2d7EcAAC8D3f", 
         "DAI": "0x23aA9CAa76f83cBDC2315BbF5699f107f37dFFd5", 
         "EXECUTOR": "0xaA9181a2DdB22699E9d38D3993701bA263759533", 
-        "EXPLORER_URL": "https://testnet-zkevm.polygonscan.com/tx/"
+        "EXPLORER_URL": "https://testnet-zkevm.polygonscan.com/tx/", 
+        "BATCH_MINTER": "0xACc367e5a9B29439508Af1235d2a4C82c83e4134"
     }, 
     "5001": {
         "TYPE": "single",
@@ -20,7 +21,8 @@
         "USDT": "0x1Bb19e21cbd8E3F56A8Deb7e4b97C5a729f7e09D", 
         "DAI": "0xB7d3672d8C625dA889AA579284857BA07343737a", 
         "EXECUTOR": "0x4e64EE8b3B0F37d82B494d7e96De9fe7fee3a202", 
-        "EXPLORER_URL": "https://explorer.testnet.mantle.xyz/tx/"
+        "EXPLORER_URL": "https://explorer.testnet.mantle.xyz/tx/", 
+        "BATCH_MINTER": "0x23aA9CAa76f83cBDC2315BbF5699f107f37dFFd5"
     }, 
     "0": {
         "TYPE": "MULTI",
@@ -39,7 +41,8 @@
         "EXECUTOR": "0x2749894dA86EaAB9ffbc5c2EE9016C140bc3b26a", 
         "WORMHOLE_ID": 2, 
         "relayer": "0x28D8F1Be96f97C1387e94A53e00eCcFb4E75175a", 
-        "CC_ERC20_EXPLORER_URL": "https://goerli.etherscan.io/address/"
+        "CC_ERC20_EXPLORER_URL": "https://goerli.etherscan.io/address/", 
+        "BATCH_MINTER": "0x467c1Fb12957a476203b6FE22537Ae6030b54653"
     }, 
     "84531": {
         "TYPE": "MULTI", 
@@ -52,6 +55,7 @@
         "EXECUTOR": "0x1fd757D951b43d75B4e14DFBbaa1180E4867f73C", 
         "WORMHOLE_ID": 30, 
         "relayer": "0xea8029CD7FCAEFFcD1F53686430Db0Fc8ed384E1", 
-        "CC_ERC20_EXPLORER_URL": "https://goerli.basescan.org/address/"
+        "CC_ERC20_EXPLORER_URL": "https://goerli.basescan.org/address/", 
+        "BATCH_MINTER": "0xeB113D833697f394837d3e33E1a103F4860a2fe6"
     }
 }

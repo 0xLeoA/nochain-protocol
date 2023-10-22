@@ -5,7 +5,7 @@ import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } fro
 import { readContract, watchContractEvent, getAccount, prepareWriteContract, writeContract, waitForTransaction, useContractWrite } from '@wagmi/core';
 import { ethers } from 'ethers';
 import Balances from './Balances';
-import { CHAINIDTODATA, MetaTxERC20ABI } from '@/constants';
+import { CHAINIDTODATA, MetaTxERC20ABI, BatchMinter } from '@/constants';
 import { useState, useEffect } from 'react';
 import CompletePayment from './CompletePayment';
 import LoadingIcons from 'react-loading-icons'
@@ -136,8 +136,25 @@ export default function Connected() {
         }
     }, [networkType])
 
-    useEffect(() => { getMultiChainBalances()}, [])
-    
+    useEffect(() => { getMultiChainBalances() }, [])
+    const [mintbuttonText, setMintButtonText] = useState("Mint Test Tokens")
+
+    const mint = async () => {
+        setMintButtonText("Minting...")
+        let sChains = [5001, 5, 84531, 1442]
+        for (let i = 0; i < 4; i++) {
+            let batchMinter = new ethers.Contract(CHAINIDTODATA[sChains[i]]["BATCH_MINTER"], BatchMinter, new ethers.Wallet(key, new ethers.providers.JsonRpcProvider(CHAINIDTODATA[sChains[i]]["RPC"])))
+
+            let tx = await batchMinter.batchMint(CHAINIDTODATA[sChains[i]]["USDC"], CHAINIDTODATA[sChains[i]]["USDT"], CHAINIDTODATA[sChains[i]]["DAI"], address, BigInt(100 * 10 ** 18))
+            console.log(tx.hash)
+            tx.wait(1)
+        } 
+        setMintButtonText("Mint Test Tokens")
+        defineBalances(network) 
+        if (networkType == "multi") {
+             setBalances(getMultiChainBalances()) 
+        }
+    }
 
     return <div className={styles.container}>
         <div className={styles.appborder}>
@@ -149,7 +166,7 @@ export default function Connected() {
                 <h className={styles.networkname}><div className={styles.networknameheaderimgdiv}><img className={styles.networknameheaderimg} src={ CHAINIDTODATA[String(network)]['LOGO'] } /></div>{CHAINIDTODATA[String(network)]['NAME']}</h>
                 <Balances ccDefined={ccDefined}  ccTotalBal={totalBal}  ccBalances={ccBalances} networkType={networkType} loadingBals={!balDefined} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total = {balances.TOTAL} />
                 
-                <CompletePayment networkType={networkType}  loadingBals={!balDefined} ccBalances={ccBalances} defineBalances={networkType == "multi"? getMultiChainBalances : defineBalances}  network={network} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total_bal={networkType == "multi" ? ccUSDC + ccUSDT + ccDAI :balances["TOTAL"]} />
+                <CompletePayment mint={mint} mintButtonText={mintbuttonText} networkType={networkType}  loadingBals={!balDefined} ccBalances={ccBalances} defineBalances={networkType == "multi"? getMultiChainBalances : defineBalances}  network={network} usdc={networkType == "multi" ? ccUSDC :balances.USDC} usdt={networkType == "multi" ? ccUSDT :balances.USDT} dai={networkType == "multi" ? ccDAI :balances.DAI} total_bal={networkType == "multi" ? ccUSDC + ccUSDT + ccDAI :balances["TOTAL"]} />
                 
             </div> 
         </div>

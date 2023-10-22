@@ -82,6 +82,8 @@ export default function CompletePayment(props) {
     };
 
    
+
+   
     return (<>{props.networkType !== "multi" ? <div className={styles.paymentsettinsdiv}>
         <div className={styles.toppaymentsettingsdiv}>
         <h>Send</h>
@@ -107,7 +109,7 @@ export default function CompletePayment(props) {
             <h>on</h><button className={styles.selectednetworkbutton}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[props.network]["LOGO"]}/></div>{CHAINIDTODATA[props.network]["NAME"]}</button>
         </div>
         <CompletePaymentButton networkType={props.networkType}   loadingBals={props.loadingBals}  defineBalances={props.defineBalances} network={props.network} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
-        
+        <div className={styles.mintbuttondiv}><button disabled={props.mintButtonText == "Minting..."} className={styles.mintbutton} onClick={props.mint}>{props.mintButtonText}</button></div>
         {selectingToken ? <div className={styles.modal}>
             <div onClick={setSelectingTokenState} className={styles.overlay} />
             <div className={styles.modalcontent}>
@@ -158,6 +160,7 @@ export default function CompletePayment(props) {
             <h>on</h><button className={styles.selectednetworkbutton} onClick={() => {setSelectingCCNetwork(true)}}><div className={styles.selectedtokenimgdiv}><img className={styles.selectedtokenimg} src={CHAINIDTODATA[ccSelectedNetwork]["LOGO"]}/></div>{CHAINIDTODATA[ccSelectedNetwork]["NAME"]}</button>
         </div>
             <CompletePaymentButton defineBalances={props.defineBalances} ccBalances={props.ccBalances} network={props.network} networkType={props.networkType}  selectedNetwork={ccSelectedNetwork} tokenToImg={tokenToImg} selectedToken={selectedToken} USDC={props.usdc} USDT={props.usdt} DAI={props.dai} amount={amount} receiver={receiver} total_bal={props.total_bal} />
+            <div className={styles.mintbuttondiv}><button disabled={props.mintButtonText == "Minting..."} className={styles.mintbutton} onClick={props.mint}>{props.mintButtonText}</button></div>
             {selecingCCNetwork ? 
         <div className={styles.modal}>
                     <div onClick={() => { setSelectingCCNetwork(!selecingCCNetwork) }} className={styles.overlay} />
