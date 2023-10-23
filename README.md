@@ -1,6 +1,13 @@
 # nochain-protocol 
-Network & Token Abstraction CrossChain payment solution. Built solo by a 13-year old.
+# Network & Token Abstraction CrossChain payment solution. Built solo by a 13-year old.
 
+To replicate: 
+
+git clone 
+
+cd web 
+
+yarn dev
 
 
 Web3 is plagued with scaling solutions. Each one is competing the become the cheapest, fastest,  most secure, and best overall. Although this does do a good job of scaling Ethereum, it does have a negative ramification in the sense that it dilutes & disperses liquidity between chains. Instead of having one big, universal mega-chain users have to spread their balances between the hundreds of L2s. 
