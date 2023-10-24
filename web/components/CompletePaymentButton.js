@@ -752,7 +752,7 @@ export default function CompletePaymentButton(props) {
                         if (CHAINIDTODATA[chain].WORMHOLE_ID == idkDict[chain].destChain) {
                             // if call is not crosschain
                             tx = await contract.executeCCPayment(ccTxsSignedList[chain].userAddresses, ccTxsSignedList[chain].contractAddresses, ccTxsSignedList[chain].functionSignatures, ccTxsSignedList[chain].sigRs, ccTxsSignedList[chain].sigSs, ccTxsSignedList[chain].sigVs, idkDict[chain], {
-                                gasLimit: 250000, // Specify the gas limit here
+                                gasLimit: 450000, // Specify the gas limit here
                         
                             })
                         } else {
